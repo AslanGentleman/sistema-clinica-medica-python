@@ -1,0 +1,98 @@
+fila = []
+
+fila.append("1. Ana")
+fila.append("2. Bruno")
+fila.append("3. Carlos")
+
+print("--- FILA INICIAL ---")
+for paciente in fila:
+    print(paciente)
+
+paciente_atendido = fila.pop(0)
+
+print("\n--- CHAMANDO PACIENTE ---")
+print(f"Atendendo agora: {paciente_atendido}")
+
+print("\n--- RESTAM NA FILA ---")
+for paciente in fila:
+    print(paciente)
+pacientes = []
+
+def linha():
+    print('=' * 30)
+linha()
+print('SISTEMA CLINICA VIDA +'.center(30))
+linha()
+    
+
+while True:
+    linha()
+    print('---ESCOLHA UMA OPÇÃO---'.center(30))
+    linha()
+    print('1. Cadastrar paciente')
+    print('2. Ver estatisticas')
+    print('3. Buscar paciente')
+    print('4. Listar todos os pacientes')
+    print('5. Sair')
+
+    opcao = input('Escolha uma opção (1 a 5): ')
+
+    if opcao == '1':
+        linha()
+        print('---NOVO CADASTRO---')
+        nome = input('Digite o nome: ')
+        idade = int(input('Digite a idade: '))
+        telefone = input('Digite o telefone: ')
+
+        ficha_paciente = {
+            'nome': nome,
+            'idade': idade,
+            'telefone': telefone
+        }
+        pacientes.append(ficha_paciente)
+        print(f'\nSucesso! {nome} foi cadastrado.')
+
+    elif opcao == '2':
+        if len(pacientes) == 0:
+            print('\n Ainda não há cadastros!')
+        else:
+            total = len(pacientes)
+            soma_idades = sum(p['idade'] for p in pacientes)
+            media = soma_idades / total
+
+            mais_novo = min(pacientes, key=lambda p: p['idade'])
+            mais_velho = max(pacientes, key=lambda p: p['idade'])
+
+            linha()
+            print('---ESTATISTICAS DA CLÍNICA---')
+            linha()
+            print(f'Total de pacientes: {total}')
+            print(f'Média de idade: {media:.1f} anos')
+            print(f"Mais novo: {mais_novo['nome']} ({mais_novo['idade']} anos)")
+            print(f"Mais velho: {mais_velho['nome']} ({mais_velho['idade']} anos)")
+
+    elif opcao == '3':
+        nome_busca = input('Qual nome você deseja buscar? ').lower()
+        achou = False
+
+        for p in pacientes:
+            if nome_busca in p['nome'].lower():
+                print(f'Achamos: {p['nome']} | {p['idade']} anos | Telefone: {p['telefone']}')
+                achou = True
+
+        if achou == False:
+            print('Ninguém encontrado.')
+
+    elif opcao == '4':
+        if len(pacientes) == 0:
+            print(f'Lista está vazia.')
+
+        else: 
+            print("---REGISTRO DE PACIENTES---")
+            for p in pacientes:
+                print(f"Nome: {p['nome']} | Idade: {p['idade']} | Telefone: {p['telefone']}")
+    elif opcao == '5':
+        print('Fechando o sistema... Até mais!')
+        break
+    else: 
+        print('Opção inválida! Digite um número de 1 a 5')
